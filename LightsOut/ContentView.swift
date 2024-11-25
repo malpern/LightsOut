@@ -7,13 +7,26 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ParentView: View {
     @State private var isOn: Bool = true
+    @State private var selectedOption: Int = 1 // Picker selection
+
+    // Computed property to determine the icon name
+    private var selectedIconName: String {
+        let baseName = selectedOption == 1 ? "lightbulb" : "hand.wave"
+        return isOn ? baseName : "\(baseName).fill"
+    }
+
+    // Reusable shadow modifier based on state
+    private var shadowStyle: some ViewModifier {
+        ModifierShadow(isOn: isOn)
+    }
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(
-                colors: isOn ? [.red, .yellow] : [.black]),
+            // Background Gradient
+            LinearGradient(
+                gradient: Gradient(colors: isOn ? [.red, .yellow] : [.black]),
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -21,30 +34,59 @@ struct ContentView: View {
             .animation(.easeInOut, value: isOn)
 
             VStack {
-                Image(systemName:  isOn ? "lightbulb" : "lightbulb.fill")
-                    .renderingMode(.template)
-                    .foregroundColor(isOn ? .black : .white)
-                    .font(.system(size: 40))
-                    .shadow(color: isOn ? .clear : .white, radius: isOn ? 0 : 10)
-                    .shadow(color: isOn ? .clear : .white, radius: isOn ? 0 : 10)
+                Spacer()
 
-                
-                Toggle("Lights out, Micah!", isOn: $isOn)
-                    .font(.system(size: 35))
-                    .foregroundColor(isOn ? .black : .white)
-                    .tint(.green) // Optional: Change toggle color
-                    .padding() // Add some padding to the toggle
-                    .shadow(color: isOn ? .clear : .white, radius: isOn ? 0 : 10)
-                    .shadow(color: isOn ? .clear : .white, radius: isOn ? 0 : 10)
-                    .sensoryFeedback(.selection, trigger: isOn)
-                    .animation(.easeInOut, value: isOn)
+                // Center the icon and toggle
+                VStack(spacing: 20) {
+                    Image(systemName: selectedIconName)
+                        .renderingMode(.template)
+                        .foregroundColor(isOn ? .black : .white)
+                        .font(.system(size: 40))
+                        .frame(width: 50, height: 50, alignment: .center)
+                        .modifier(shadowStyle)
 
+                    Toggle("Lights out, Micah!", isOn: $isOn)
+                        .font(.system(size: 35))
+                        .foregroundColor(isOn ? .black : .white)
+                        .tint(.green)
+                        .padding()
+                        .modifier(shadowStyle)
+                        .sensoryFeedback(.selection, trigger: isOn)
+                        .animation(.easeInOut, value: isOn)
                 }
-            .padding()
+                .frame(maxWidth: .infinity) // Center horizontally
+
+                Spacer()
+
+                // Keep the Picker at the bottom
+                VStack {
+                    Picker("Icon", selection: $selectedOption) {
+                        Image(systemName: "lightbulb").tag(1)
+                        Image(systemName: "hand.wave").tag(2)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    .background(isOn ? Color.clear : Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .accentColor(isOn ? .black : .yellow)
+                }
+                .padding(.bottom, 20) // Add padding to avoid clipping with the bottom edge
+            }
         }
     }
 }
 
+// Reusable shadow modifier
+struct ModifierShadow: ViewModifier {
+    let isOn: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .shadow(color: isOn ? .clear : .white, radius: isOn ? 0 : 8)
+            .shadow(color: isOn ? .clear : .white, radius: isOn ? 0 : 8)
+    }
+}
+
 #Preview {
-    ContentView()
+    ParentView()
 }
