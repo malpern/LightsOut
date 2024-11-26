@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		860EE85E2CF443C400549006 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 860EE85D2CF443C400549006 /* FirebaseAnalytics */; };
+		860EE8632CF551F400549006 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 860EE8622CF551F400549006 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,16 +29,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				860EE85E2CF443C400549006 /* FirebaseAnalytics in Frameworks */,
+				860EE8632CF551F400549006 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		860EE8612CF551F400549006 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		86B746D82CF037B700B011FA = {
 			isa = PBXGroup;
 			children = (
 				86B746E32CF037B800B011FA /* LightsOut */,
+				860EE8612CF551F400549006 /* Frameworks */,
 				86B746E22CF037B800B011FA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,6 +81,7 @@
 			name = LightsOut;
 			packageProductDependencies = (
 				860EE85D2CF443C400549006 /* FirebaseAnalytics */,
+				860EE8622CF551F400549006 /* FirebaseFirestore */,
 			);
 			productName = LightsOut;
 			productReference = 86B746E12CF037B800B011FA /* LightsOut.app */;
@@ -369,6 +380,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 860EE85C2CF443C400549006 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		860EE8622CF551F400549006 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 860EE85C2CF443C400549006 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
