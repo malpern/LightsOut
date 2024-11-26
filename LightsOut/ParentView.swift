@@ -38,21 +38,22 @@ struct ParentView: View {
 
                 // Center the icon and toggle
                 VStack(spacing: 20) {
-                    Image(systemName: selectedIconName)
-                        .renderingMode(.template)
-                        .foregroundColor(isOn ? .black : .white)
-                        .font(.system(size: 40))
-                        .frame(width: 50, height: 50, alignment: .center)
-                        .modifier(shadowStyle)
+                    Group {
+                        Image(systemName: selectedIconName)
+                            .renderingMode(.template)
+                            .font(.system(size: 40))
+                            .frame(width: 50, height: 50, alignment: .center)
+                        
+                        Toggle("Lights out, Micah!", isOn: $isOn)
+                            .font(.system(size: 35))
+                            .tint(.green)
+                            .padding()
+                            .sensoryFeedback(.selection, trigger: isOn)
+                            .animation(.easeInOut, value: isOn)
+                    }
+                    .modifier(shadowStyle)
+                    .foregroundColor(isOn ? .black : .white)
 
-                    Toggle("Lights out, Micah!", isOn: $isOn)
-                        .font(.system(size: 35))
-                        .foregroundColor(isOn ? .black : .white)
-                        .tint(.green)
-                        .padding()
-                        .modifier(shadowStyle)
-                        .sensoryFeedback(.selection, trigger: isOn)
-                        .animation(.easeInOut, value: isOn)
                 }
                 .frame(maxWidth: .infinity) // Center horizontally
 
